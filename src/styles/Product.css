@@ -1,0 +1,129 @@
+
+:root {
+    --primary: #ff4545;
+    --white: #fff;
+    --black: #222;
+    --grey1: #3a3b3c;
+    --grey2: #828282;
+}  
+
+
+  
+  .product {
+    max-width: 270px;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .product .img-container {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .product .img-container img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .product .bottom {
+    padding: 0.7rem;
+    text-align: center;
+  }
+  
+  .product .bottom a {
+      text-decoration: none;
+      color: black;
+    margin-bottom: 1rem;
+    font-weight: inherit;
+    font-size: 0.7rem;
+  }
+  
+  .product .bottom a:hover {
+    color: var(--primary);
+  }
+  
+  .product .bottom span {
+    color: darkgrey;
+    font-size: 1rem;
+  }
+  
+  .product .bottom .cancel {
+    font-size: 1rem;
+    color: var(--grey2);
+    text-decoration: line-through;
+  }
+  
+  .product .addCart {
+    position: absolute;
+    right: 0;
+    bottom: 0.6rem;
+    background-color: var(--white);
+    border-radius: 50%;
+    padding: 0.9rem 1.1rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+    transition: all 300ms ease-in-out;
+  }
+  
+  .product:hover .addCart {
+    border-radius: 1rem 0 0 0;
+  }
+  
+  .product .addCart:hover {
+    background-color: var(--primary);
+    color: var(--white);
+  }
+  
+  .product i {
+    transition: all 300ms ease-in-out;
+  }
+  
+  .product .side-icons {
+    position: absolute;
+    right: 0;
+    top: 35%;
+    transform: translate(80%, -50%);
+    display: flex;
+    flex-direction: column;
+    padding: 0.6rem;
+    transition: all 500ms ease-in-out;
+  }
+  
+  .product .side-icons span {
+    font-size: 0.9rem;
+    background-color: var(--white);
+    margin: 0.3rem;
+    padding: 0.8rem 1rem;
+    border-radius: 50%;
+    transition: all 300ms ease-in-out;
+  }
+  
+  .product .side-icons span:hover {
+    background-color: var(--primary);
+    color: var(--white);
+  }
+  
+  .product:hover .side-icons {
+    transform: translate(0%, -50%);
+  }
+  
+ 
+  @media only screen and (max-width: 768px) {
+    .prodouct-layout {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media only screen and (max-width: 567px) {
+    .prodouct {
+      max-width: 255px;
+      flex-direction: column;
+    }
+    .product .side-icons span {
+      padding: 0.5rem 0.7rem;
+    }
+    .price{
+      font-size: 13px;
+    }
+  }

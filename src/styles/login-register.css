@@ -1,0 +1,181 @@
+
+
+.login-container{
+  display: grid;
+  height: 100vh;
+  place-items:center;
+  margin-top: 50px;
+  background: whitesmoke;
+}
+.register-container{
+  display: grid;
+  height: 100vh;
+  place-items:center;
+  margin: 90px 0;
+  background: #fff;
+}
+.login_div{
+  width: 400px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.register_div{
+  width: 380px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 7px 7px 14px rgba(0, 0, 0, 0.20);
+}
+.register_div .title{
+  text-align: center;
+  font-size: 25px;
+  font-weight: 530;
+}
+
+.login_div .title{
+  text-align: center;
+  font-size: 25px;
+  font-weight: 550;
+}
+.login_div .social_icons{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.register_div .social_icons{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.social_icons a{
+  display: block;
+  height: 45px;
+  width: 100%;
+  line-height: 45px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s linear;
+}
+.social_icons a span{
+  margin-left: 5px;
+  font-size: 18px;
+}
+.social_icons a:first-child{
+  margin-right: 5px;
+  background: #4267B2;
+}
+.social_icons a:first-child:hover{
+  background: #375695;
+}
+.social_icons a:last-child{
+  margin-left: 5px;
+  background: #E65138;
+}
+.social_icons a:last-child:hover{
+  background: #E92900;
+}
+form {
+  margin-top: 25px;
+}
+form .input_box{
+  height: 50px;
+  width: 100%;
+  position: relative;
+  margin-top: 15px;
+}
+.input_box input{
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  padding-left: 45px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+.input_box input:focus{
+  border-color: lightblue;
+}
+.input_box .icon{
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  color: grey;
+}
+form .option_div{
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+.option_div .check_box{
+  display: flex;
+  align-items: center;
+}
+.option_div span{
+  margin-left: 5px;
+  font-size: 16px;
+  color: #333
+}
+.option_div .forget_div a{
+  font-size: 16px;
+  color: #333;
+}
+.button input{
+  padding-left: 0;
+  background: #333;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  font-weight: 450;
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+.button input:hover{
+  background: lightblue;
+}
+form .sign_up{
+  text-align: center;
+  margin-top: 25px;
+}
+.sign_up a{
+  color: lightblue;
+}
+form a{
+  text-decoration: none;
+}
+form a:hover{
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 530px){
+ .login_div {
+   width: 340px;
+   padding: 23px;
+   margin-top: 65px;
+ }
+
+ .register_div {
+  width: 340px;
+  padding: 23px;
+  margin-left: 0;
+  margin-bottom: 80px;
+}
+
+ .option_div span{
+   font-size: 12px;
+ }
+
+ .register-container{
+   margin-bottom: 100px;
+ }
+
+
+}
