@@ -1,5 +1,5 @@
 
-import '../styles/login-register.css'
+import '../../styles/login-register.css'
 const Register = () => {
 
 

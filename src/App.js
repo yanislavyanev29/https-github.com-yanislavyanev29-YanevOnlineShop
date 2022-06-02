@@ -1,16 +1,16 @@
 
 import { Routes, Route } from 'react-router-dom';
 
-import Navbar from './components/Navbar.jsx';
+import Navbar from './components/layout/Navbar.jsx';
 
-import Footer from './components/Footer.jsx';
-import Home from './HomePage/Home.jsx';
-import Register from './components/Register.jsx';
-import Login from './components/Login.jsx';
-import Cart from './components/Cart.jsx'
+import Footer from './components/layout/Footer.jsx';
+import Home from './components/layout/Home.jsx';
+import Register from './components/account/Register.jsx';
+import Login from './components/account/Login.jsx';
+import Cart from './components/cart/Cart.jsx'
 import './App.css';
-import ProductDetails from './components/ProductDetails.jsx';
-import CategoryPage from './components/CategoryPage.jsx';
+import ProductDetails from './components/catalog/ProductDetails.jsx';
+import CategoryPage from './components/catalog/CategoryPage.jsx';
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
                            <Route path="/" element={<Home/>}/>
                            <Route path="/login" element={<Login />} />
                             <Route path="/register" element={<Register/>} />
-                            <Route path="/details/:productId" element={<ProductDetails />} />
+                            <Route path="/details/:id" element={<ProductDetails />} />
                             <Route path="/cart" element={<Cart/>} />
                             <Route path="/categories" element={<CategoryPage />} />
                          </Routes>
