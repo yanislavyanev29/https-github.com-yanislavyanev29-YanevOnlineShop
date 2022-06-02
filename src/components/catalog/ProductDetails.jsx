@@ -1,6 +1,6 @@
 
 import React from 'react'
-import axios from "axios";
+import agent from "../api/agent.js";
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import { Button } from "@material-ui/core";
@@ -9,8 +9,10 @@ import { Carousel } from 'react-bootstrap';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RelatedProducts from '../layout/Carousel.js';
+import NotFound from '../errors/NotFound.jsx'
+import LoadingComponent from '../layout/LoadingComponent.jsx';
 
-// import Swiper styles
+
 
 
 const Container = styled.div`
@@ -129,11 +131,18 @@ const ProductDetails = () => {
   const images = Object.entries(product).filter(x => x[0].includes('imageUrl')).map(x => x[1])
   console.log(images)
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    axios.get(`https://localhost:5000/api/products/${id}`)
-      .then(response => setProduct(response.data))
-      .catch(error => console.log(error))
+      agent.Catalog.details(parseInt(id))
+          .then(response => setProduct(response))
+          .catch(error => console.log(error))
+          .finally(() => setLoading(false))
   }, [id]);
+
+  if (loading) return <LoadingComponent message='Loading product...' />
+
+  if (!product) return <NotFound />
 
 
 
@@ -145,7 +154,7 @@ const ProductDetails = () => {
       <Wrapper>
         <ImgContainer>
 
-          <Carousel fade>
+          <Carousel fade style={{width: '90%'}}>
 
 
 
@@ -153,7 +162,7 @@ const ProductDetails = () => {
 
 
 
-              <Carousel.Item>
+              <Carousel.Item >
                 <Image
                   className="d-flex w-100"
                   src={img}
@@ -213,7 +222,7 @@ const ProductDetails = () => {
 
       <div className="related-products">
 
-        <p>Related Products</p>
+        <p >Related Products</p>
       </div>
       <RelatedProducts />
     </Container>

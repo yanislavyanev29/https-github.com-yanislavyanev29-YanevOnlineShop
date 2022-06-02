@@ -1,10 +1,24 @@
-import Products from './Products.jsx'
-import '../../styles/Products.css'
 
+import { useState, useEffect } from 'react';
+import agent from '../api/agent.js'
+import LoadingComponent from '../layout/LoadingComponent.jsx';
+import '../../styles/Products.css'
+import CategoryProduct from './CategoryProduct.jsx'
 
 const CategoryPage = () => {
 
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+  
+    useEffect(() => {
+       
+       agent.Catalog.list()
+       .then(products => setProducts(products))
+       .catch(error => console.log(error))
+       .finally(() => setLoading(false));
+    }, []);
 
+if(loading) return <LoadingComponent message='Loading products...'/>
 
     return (
 
@@ -32,7 +46,7 @@ const CategoryPage = () => {
                                     <small>(33)</small>
                                 </label>
                             </li>
-                            
+
 
                             <li>
                                 <input type="checkbox" name="" id="" />
@@ -42,7 +56,7 @@ const CategoryPage = () => {
                                 </label>
                             </li>
 
-                           
+
                         </ul>
                     </div>
 
@@ -84,7 +98,7 @@ const CategoryPage = () => {
                                 </label>
                             </li>
 
-                            
+
 
                             <li>
                                 <input type="checkbox" name="" id="" />
@@ -116,31 +130,34 @@ const CategoryPage = () => {
                     <form action="">
                         <div className="item">
                             <label for="sort-by">Sort By</label>
-                            <select name="sort-by" id="sort-by">
+                            <select className='item-select' name="sort-by" id="sort-by">
                                 <option value="title" selected="selected">Name</option>
                                 <option value="number">Price</option>
-                              
+
                                 <option value="created">Newness</option>
                             </select>
                         </div>
                         <div className="item">
-                            <label for="order-by">Order</label>
-                            <select name="order-by" id="sort-by">
+                            <label htmlFor="order-by">Order</label>
+                            <select className='item-select' name="order-by" id="sort-by">
                                 <option value="ASC" selected="selected">ASC</option>
                                 <option value="DESC">DESC</option>
                             </select>
                         </div>
-                        <a href="">Apply</a>
+                        <a href="#">Apply</a>
                     </form>
 
-                    <Products/>
+                    <div className="product-layout">
 
-                    <ul class="pagination">
-          <span>1</span>
-          <span>2</span>
-          <span class="icon">››</span>
-          <span class="last">Last »</span>
-        </ul>
+                        {products.map(x => <CategoryProduct key={x.id} product={x} />)}
+                    </div>
+
+                    <ul className="pagination">
+                        <span>1</span>
+                        <span>2</span>
+                        <span className="icon">››</span>
+                        <span className="last">Last »</span>
+                    </ul>
                 </div>
             </div>
         </section>

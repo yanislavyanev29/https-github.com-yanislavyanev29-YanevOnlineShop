@@ -2,7 +2,7 @@
 import React from "react";
 
 import '../../styles/Product.css'
-import { Link,useNavigate   } from 'react-router-dom';
+import {useNavigate   } from 'react-router-dom';
 
 const CategoryProduct = ({
 product
@@ -23,7 +23,7 @@ product
 
 
             <div className="img-container">
-              <img src={product.imageUrl1}/>
+              <img src={product.imageUrl1} alt=''/>
               <div className="addCart">
                 <i className="fas fa-shopping-cart"></i>
               </div>

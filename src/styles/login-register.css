@@ -5,7 +5,7 @@
   height: 100vh;
   place-items:center;
   margin-top: 50px;
-  background: whitesmoke;
+  background: #fff;
 }
 .register-container{
   display: grid;
@@ -23,7 +23,7 @@
 }
 
 .register_div{
-  width: 380px;
+  width: 450px;
   background: #fff;
   padding: 30px;
   border-radius: 5px;

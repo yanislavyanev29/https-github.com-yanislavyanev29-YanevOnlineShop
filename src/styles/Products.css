@@ -2,7 +2,7 @@
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
-    max-width: 1200px;
+    max-width: 1300px;
     gap: 1.7rem;
     margin: 0 auto;
     padding: 2rem 1rem;
@@ -191,6 +191,12 @@
     border: 1px solid var(--primary);
     background-color: var(--primary);
     color: var(--white);
+  }
+
+  .item-select{
+
+    border-radius: 20px;
+    margin: 10px;
   }
   
   @media only screen and (max-width: 768px) {
