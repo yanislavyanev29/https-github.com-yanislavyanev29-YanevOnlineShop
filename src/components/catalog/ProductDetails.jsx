@@ -8,7 +8,6 @@ import { mobile430,mobile795 } from "../../responsive.js";
 import { Carousel } from 'react-bootstrap';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import '../../styles/ProductDetails.css'
 import RelatedProducts from '../layout/Carousel.js';
 
 // import Swiper styles
