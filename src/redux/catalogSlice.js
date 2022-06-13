@@ -2,7 +2,7 @@ import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/too
 import agent from "../components/api/agent.js";
 
 const productsAdapter = createEntityAdapter();
-const initialState = productsAdapter.getInitialState();
+
 
 export const fetchProductsAsync = createAsyncThunk(
 
@@ -34,32 +34,37 @@ export const catalogSlice = createSlice({
 
     name: 'categories',
   
-    initialState,
+    initialState :  productsAdapter.getInitialState({
+        productsLoaded: false,
+        productStatus: 'idle'
+    }),
     reducers: {},
     extraReducers: (builder => {
 
         builder.addCase(fetchProductsAsync.pending, (state) => {
-           
+            state.productStatus = 'pendingFetchProducts';
         });
 
         builder.addCase(fetchProductsAsync.fulfilled, (state, action) => {
             productsAdapter.setAll(state, action.payload);
-           
+           state.productStatus = 'idle';
+           state.productsLoaded = true;
         });
 
         builder.addCase(fetchProductsAsync.rejected, (state, action) => {
             console.log(action.payload);
-
+           state.productStatus = 'idle';
         });
 
 
         builder.addCase(fetchProductAsync.pending, (state) => {
-            
+            state.productStatus = 'pendingFetchProduct';
           
         });
 
         builder.addCase(fetchProductAsync.fulfilled, (state, action) => {
             productsAdapter.upsertOne(state, action.payload);
+            state.productStatus = 'idle';
             
       
 
@@ -67,6 +72,7 @@ export const catalogSlice = createSlice({
         });
         builder.addCase(fetchProductAsync.rejected, (state, action) => {
             console.log(action);
+            state.productStatus = 'idle';
 
         })
     })

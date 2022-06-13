@@ -4,11 +4,12 @@ import { useDispatch,useSelector } from 'react-redux';
 import { fetchProductsAsync,productSelectors } from '../../redux/catalogSlice.js';
 import '../../styles/Products.css'
 import CategoryProduct from './CategoryProduct.jsx'
+import LoadingComponent from '../layout/LoadingComponent.jsx';
 
 const CategoryPage = () => {
 
     const products = useSelector(productSelectors.selectAll)
-    const {productsLoaded} = useSelector(state => state.catalog);
+    const {productsLoaded,productStatus} = useSelector(state => state.catalog);
     const dispatch = useDispatch();
   
     useEffect(() => {
@@ -16,7 +17,7 @@ const CategoryPage = () => {
        
     }, [dispatch, productsLoaded]);
 
-// if(productStatus.includes('pending')) return <LoadingComponent message='Loading products...'/>
+ if(productStatus.includes('pending')) return <LoadingComponent message='Loading products...'/>
 
     return (
 

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RelatedProducts from '../layout/Carousel.js';
 import NotFound from '../errors/NotFound.jsx'
-
+import LoadingComponent from '../layout/LoadingComponent.jsx';
 import { addBasketItemAsync } from '../../redux/basketSlice.js';
 import { fetchProductAsync,productSelectors } from '../../redux/catalogSlice.js';
 import { useSelector,useDispatch } from 'react-redux';
@@ -130,7 +130,7 @@ const ProductDetails = () => {
  const dispatch = useDispatch();
   const { id } = useParams();
   const product = useSelector(state => productSelectors.selectById(state,id));
-
+  const {productStatus} = useSelector(state => state.catalog)
   
   
   const [quantity, setQuantity] = useState(1);
@@ -150,7 +150,7 @@ const ProductDetails = () => {
      
   }, [id, item,dispatch,product],);
 
- // if (productStatus.includes('pending')) return <LoadingComponent message='Loading product...' />
+  if (productStatus.includes('pending')) return <LoadingComponent message='Loading product...' />
   if (!product) return <NotFound />
 
   
