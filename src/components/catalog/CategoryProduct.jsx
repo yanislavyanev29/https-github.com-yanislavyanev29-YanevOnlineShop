@@ -1,8 +1,13 @@
 
 import React from "react";
 
+import {useDispatch } from "react-redux";
+import { addBasketItemAsync } from '../../redux/basketSlice.js';
 import '../../styles/Product.css'
 import {useNavigate   } from 'react-router-dom';
+
+
+
 
 const CategoryProduct = ({
 product
@@ -15,7 +20,12 @@ product
   }
 
 
-  
+
+
+const dispatch = useDispatch();
+
+ 
+ 
   return (
 
      
@@ -24,8 +34,8 @@ product
 
             <div className="img-container">
               <img src={product.imageUrl1} alt=''/>
-              <div className="addCart">
-                <i className="fas fa-shopping-cart"></i>
+              <div className="addCart" onClick={() => dispatch(addBasketItemAsync({productId: product.id}))}>
+                <i className="fas fa-shopping-cart" ></i>
               </div>
 
               <ul className="side-icons">

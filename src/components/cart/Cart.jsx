@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import {Add,Remove} from "@material-ui/icons";
-
 import Announcement from "../HomePage/Announcement.jsx";
 import {mobile960, mobile795} from "../../responsive.js";
+import { useDispatch,useSelector } from "react-redux";
+import { addBasketItemAsync,removeBasketItemAsync } from "../../redux/basketSlice.js";
 
 
 const Container = styled.div``;
@@ -78,7 +79,7 @@ justify-content: space-around;
 `;
 
 const ProductName = styled.span``;
-const ProductId = styled.span``;
+
 
 const ProductColor = styled.div`
 width: 20px;
@@ -159,8 +160,16 @@ width: 100%;
 `;
 const Cart = () => {
 
+const {basket} = useSelector(state => state.basket);
+const dispatch = useDispatch();
+    
+   const productsTotalPrice = basket?.items.reduce((sum,item) => sum + (item.quantity * item.price),0) ?? 0;
 
+   const deliveryFree = productsTotalPrice > 300 ? 0 : 8;
 
+   const total = productsTotalPrice + deliveryFree;
+
+       if(!basket) return <Title>The Basket is empty</Title>
     return (
 
         <Container>
@@ -181,16 +190,16 @@ const Cart = () => {
                <Bottom>
 
                    <Info>
-                       <Product>
+                       {basket.items.map(item => (
+                        <>
+                            <Product>
                            <ProductDetail>
-                               <Image src= "https://static.footshop.com/417856/33407.jpg" alt="CartProductImage"/>
+                               <Image src= {item.imageUrl} alt="CartProductImage"/>
                                <Details>
                                     <ProductName>
-                                        <b>Product:</b> NIKE AIR MAX 97
+                                        <b>Product:</b> {item.name}
                                     </ProductName>
-                                     <ProductId>
-                                         <b>ID:</b> 7345893475349
-                                     </ProductId>
+                                     
                                      <ProductColor color="black"/>
 
                                      <ProductSize>
@@ -200,56 +209,39 @@ const Cart = () => {
                            </ProductDetail>
                             <PriceDetails>
                            <AmountContainer>
-                               <Add/>
-                               <Amount>2</Amount>
-                               <Remove/>
+                               <Add style={{cursor: 'pointer'}} onClick={() => dispatch(addBasketItemAsync({productId: item.productId}))}/>
+                               <Amount>{item.quantity}</Amount>
+                               <Remove style={{cursor: 'pointer'}} onClick={() => dispatch(removeBasketItemAsync({productId: item.productId, quantity: 1}))}/>
                            </AmountContainer>
-                           <Price>30 $</Price>
+                           <Price>{item.price} $</Price>
                            </PriceDetails>
                        </Product>
                        <Hr />
-                       <Product>
-                           <ProductDetail>
-                               <Image src= "https://static.footshop.com/481774/52668.jpg"  alt="CartProductImage"/>
-                               <Details>
-                                    <ProductName>
-                                        <b>Product:</b> NIKE SPORTSWEAR ESSENTIAL HOODIE
-                                    </ProductName>
-                                     <ProductId>
-                                         <b>ID:</b> 445893475349
-                                     </ProductId>
-                                     <ProductColor color="black"/>
+                        
+                        
+                        </>
 
-                                     <ProductSize>
-                                         <b>Size:</b> XS S M L
-                                     </ProductSize>
-                               </Details>
-                           </ProductDetail>
-                            <PriceDetails>
-                           <AmountContainer>
-                               <Add/>
-                               <Amount>1</Amount>
-                               <Remove/>
-                           </AmountContainer>
-                           <Price>50 $</Price>
-                           </PriceDetails>
-                       </Product>
+
+
+
+                       ))}
+                      
                    </Info>
                    <Summary>
                         <SummaryTitle>Order Summary</SummaryTitle>
                         <Item>
-                            <TextOfItem>Estimated Shipping</TextOfItem>
-                            <PriceOfItem>7.00 $</PriceOfItem>
+                            <TextOfItem>Order Price</TextOfItem>
+                            <PriceOfItem>{productsTotalPrice.toFixed(2)} $</PriceOfItem>
                         </Item>
 
                         <Item>
-                            <TextOfItem> Shipping Discount</TextOfItem>
-                            <PriceOfItem>-5.00 $</PriceOfItem>
+                            <TextOfItem> Shipping Price</TextOfItem>
+                            <PriceOfItem>{deliveryFree.toFixed(2)} $</PriceOfItem>
                         </Item>
                          
                         <Item type="total">
                             <TextOfItem> Total </TextOfItem>
-                            <PriceOfItem>12.00 $</PriceOfItem>
+                            <PriceOfItem>{total.toFixed(2)} $</PriceOfItem>
 
                         </Item>
                         <Button>CHECKOUT NOW</Button>

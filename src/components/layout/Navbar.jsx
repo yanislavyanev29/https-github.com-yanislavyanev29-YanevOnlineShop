@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
-
+import { useAppSelector } from "../../redux/configureStore.js";
 import { useState } from "react";
 import { mobile960,mobile795,mobile430 } from "../../responsive.js";
 const Html = styled.div`font-family: 'Roboto', sans-serif;
@@ -146,6 +146,9 @@ const decorationNone ={
 const Navbar = () => {
     const [isActive, setActive] = useState(false);
     const [isActiveSearch, setActiveSearch] = useState(false);
+
+    const {basket} = useAppSelector(state => state.basket);
+    const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity,0)
      
     const toggleActive = () => {
       setActive(!isActive);
@@ -179,7 +182,7 @@ const Navbar = () => {
              <IconContainer>
 
                    <SearchIcon className="fas fa-search" onClick={toggleSearch} id="search-btn"></SearchIcon>
-                 <Link to="/cart" > <SearchIcon className="fas fa-shopping-cart" id="cart-btn"><span style={ {fontSize: "22px"}}>0</span></SearchIcon></Link>
+                 <Link to="/cart" > <SearchIcon className="fas fa-shopping-cart" id="cart-btn"><span style={ {fontSize: "22px"}}>{itemCount? itemCount : 0} </span></SearchIcon></Link>
                    <Bar className="fas fa-bars" id="menu-btn" onClick={toggleActive}></Bar>
              </IconContainer>
 

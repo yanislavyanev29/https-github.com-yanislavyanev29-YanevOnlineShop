@@ -1,6 +1,5 @@
 
 import React from 'react'
-import agent from "../api/agent.js";
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import { Button } from "@material-ui/core";
@@ -10,7 +9,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RelatedProducts from '../layout/Carousel.js';
 import NotFound from '../errors/NotFound.jsx'
-import LoadingComponent from '../layout/LoadingComponent.jsx';
+
+import { addBasketItemAsync } from '../../redux/basketSlice.js';
+import { fetchProductAsync,productSelectors } from '../../redux/catalogSlice.js';
+import { useSelector,useDispatch } from 'react-redux';
 
 
 
@@ -124,27 +126,34 @@ const Amount = styled.span`
 `;
 
 const ProductDetails = () => {
-
+ const {basket} = useSelector(state => state.basket);
+ const dispatch = useDispatch();
   const { id } = useParams();
-  const [product, setProduct] = useState({});
+  const product = useSelector(state => productSelectors.selectById(state,id));
+
+  
+  
+  const [quantity, setQuantity] = useState(1);
+  
+    const item = basket?.items.find(i => i.productId === product?.id);
 
   const images = Object.entries(product).filter(x => x[0].includes('imageUrl')).map(x => x[1])
-  console.log(images)
 
-  const [loading, setLoading] = useState(true);
+
+ 
 
   useEffect(() => {
-      agent.Catalog.details(parseInt(id))
-          .then(response => setProduct(response))
-          .catch(error => console.log(error))
-          .finally(() => setLoading(false))
-  }, [id]);
+    
+    if(item) setQuantity(item.quantity);
+    if(!product) dispatch(fetchProductAsync(id))
 
-  if (loading) return <LoadingComponent message='Loading product...' />
+     
+  }, [id, item,dispatch,product],);
 
+ // if (productStatus.includes('pending')) return <LoadingComponent message='Loading product...' />
   if (!product) return <NotFound />
 
-
+  
 
   return (
 
@@ -154,15 +163,15 @@ const ProductDetails = () => {
       <Wrapper>
         <ImgContainer>
 
-          <Carousel fade style={{width: '90%'}}>
+          <Carousel fade >
 
 
 
-            {images.map(img => (
+            {images.map((img,index) => (
 
 
 
-              <Carousel.Item >
+              <Carousel.Item key={index}>
                 <Image
                   className="d-flex w-100"
                   src={img}
@@ -208,11 +217,11 @@ const ProductDetails = () => {
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>{product.quantityInStock}</Amount>
-              <Add />
+              <Remove style={{cursor: 'pointer'}}  onClick={() => setQuantity(prevNum => prevNum - 1)} />
+              <Amount>{quantity}</Amount>
+              <Add style={{cursor: 'pointer'}} onClick={() => setQuantity(prevNum => prevNum + 1)} />
             </AmountContainer>
-            <Button variant="contained" color="primary">Add to cart </Button>
+            <Button variant="contained" color="primary" onClick={() => dispatch(addBasketItemAsync({productId: product?.id,quantity}))}>Add to cart </Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

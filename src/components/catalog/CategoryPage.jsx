@@ -1,24 +1,22 @@
 
-import { useState, useEffect } from 'react';
-import agent from '../api/agent.js'
-import LoadingComponent from '../layout/LoadingComponent.jsx';
+import { useEffect } from 'react';
+import { useDispatch,useSelector } from 'react-redux';
+import { fetchProductsAsync,productSelectors } from '../../redux/catalogSlice.js';
 import '../../styles/Products.css'
 import CategoryProduct from './CategoryProduct.jsx'
 
 const CategoryPage = () => {
 
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const products = useSelector(productSelectors.selectAll)
+    const {productsLoaded} = useSelector(state => state.catalog);
+    const dispatch = useDispatch();
   
     useEffect(() => {
+        if(!productsLoaded) dispatch(fetchProductsAsync());
        
-       agent.Catalog.list()
-       .then(products => setProducts(products))
-       .catch(error => console.log(error))
-       .finally(() => setLoading(false));
-    }, []);
+    }, [dispatch, productsLoaded]);
 
-if(loading) return <LoadingComponent message='Loading products...'/>
+// if(productStatus.includes('pending')) return <LoadingComponent message='Loading products...'/>
 
     return (
 
@@ -33,7 +31,7 @@ if(loading) return <LoadingComponent message='Loading products...'/>
                         <ul className="block-content">
                             <li>
                                 <input type="checkbox" name="" id="" />
-                                <label for="">
+                                <label htmlFor="">
                                     <span>Shoes</span>
                                     <small>(148)</small>
                                 </label>
@@ -41,7 +39,7 @@ if(loading) return <LoadingComponent message='Loading products...'/>
 
                             <li>
                                 <input type="checkbox" name="" id="" />
-                                <label for="">
+                                <label htmlFor="">
                                     <span>Clothings</span>
                                     <small>(33)</small>
                                 </label>
@@ -50,7 +48,7 @@ if(loading) return <LoadingComponent message='Loading products...'/>
 
                             <li>
                                 <input type="checkbox" name="" id="" />
-                                <label for="">
+                                <label htmlFor="">
                                     <span> Accessories</span>
                                     <small>(27)</small>
                                 </label>
@@ -68,7 +66,7 @@ if(loading) return <LoadingComponent message='Loading products...'/>
                         <ul className="block-content">
                             <li>
                                 <input type="checkbox" name="" id="" />
-                                <label for="">
+                                <label htmlFor="">
                                     <span>Nike</span>
                                     <small>(10)</small>
                                 </label>
@@ -76,7 +74,7 @@ if(loading) return <LoadingComponent message='Loading products...'/>
 
                             <li>
                                 <input type="checkbox" name="" id="" />
-                                <label for="">
+                                <label htmlFor="">
                                     <span>Adidas</span>
                                     <small>(7)</small>
                                 </label>
@@ -84,7 +82,7 @@ if(loading) return <LoadingComponent message='Loading products...'/>
 
                             <li>
                                 <input type="checkbox" name="" id="" />
-                                <label for="">
+                                <label htmlFor="">
                                     <span> Puma</span>
                                     <small>(3)</small>
                                 </label>
@@ -92,7 +90,7 @@ if(loading) return <LoadingComponent message='Loading products...'/>
 
                             <li>
                                 <input type="checkbox" name="" id="" />
-                                <label for="">
+                                <label htmlFor="">
                                     <span>Vans</span>
                                     <small>(3)</small>
                                 </label>
@@ -102,7 +100,7 @@ if(loading) return <LoadingComponent message='Loading products...'/>
 
                             <li>
                                 <input type="checkbox" name="" id="" />
-                                <label for="">
+                                <label htmlFor="">
                                     <span>Calvin Clain</span>
                                     <small>(3)</small>
                                 </label>
@@ -110,7 +108,7 @@ if(loading) return <LoadingComponent message='Loading products...'/>
 
                             <li>
                                 <input type="checkbox" name="" id="" />
-                                <label for="">
+                                <label htmlFor="">
                                     <span>Moncler</span>
                                     <small>(3)</small>
                                 </label>
@@ -118,7 +116,7 @@ if(loading) return <LoadingComponent message='Loading products...'/>
 
                             <li>
                                 <input type="checkbox" name="" id="" />
-                                <label for="">
+                                <label htmlFor="">
                                     <span>Givenchy</span>
                                     <small>(3)</small>
                                 </label>
@@ -129,7 +127,7 @@ if(loading) return <LoadingComponent message='Loading products...'/>
                 <div className="col-3-of-4">
                     <form action="">
                         <div className="item">
-                            <label for="sort-by">Sort By</label>
+                            <label htmlFor="sort-by">Sort By</label>
                             <select className='item-select' name="sort-by" id="sort-by">
                                 <option value="title" selected="selected">Name</option>
                                 <option value="number">Price</option>
