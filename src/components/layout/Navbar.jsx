@@ -21,16 +21,13 @@ scroll-behavior: smooth;
 ::-webkit-scrollbar-track{
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb{
   background: #fff;
   border-radius: 5rem;
 }
 ${mobile430({fontSize: "50%"})}
-
 `
 const Header = styled.div`
-
     background: #010103;
     display: flex;
     align-items: center;
@@ -65,12 +62,10 @@ const Anchor = styled.a`
     color:#fff;
     cursor: pointer;
     &:hover {
-
     color:#d3ad7f;
     border-bottom: .1rem solid #d3ad7f;;
     padding-bottom: .5rem;
     }
-
     ${mobile795({color:"#13131a",
       display:"block",
       margin: "1.3rem",
@@ -111,7 +106,6 @@ const LabelStyle = {
     }
 }
 const IconContainer = styled.div`
-
 `
 
 const SearchForm = styled.div`

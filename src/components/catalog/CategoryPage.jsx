@@ -1,10 +1,12 @@
-
 import { useEffect } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import { fetchProductsAsync,productSelectors } from '../../redux/catalogSlice.js';
 import '../../styles/Products.css'
 import CategoryProduct from './CategoryProduct.jsx'
 import LoadingComponent from '../layout/LoadingComponent.jsx';
+import RadioButton from './RadioButton.jsx';
+import { Checkbox } from '@mui/material';
+import CheckBox from './CheckBox.jsx';
 
 const CategoryPage = () => {
 
@@ -29,101 +31,11 @@ const CategoryPage = () => {
                             <h3>Category</h3>
                         </div>
 
-                        <ul className="block-content">
-                            <li>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">
-                                    <span>Shoes</span>
-                                    <small>(148)</small>
-                                </label>
-                            </li>
-
-                            <li>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">
-                                    <span>Clothings</span>
-                                    <small>(33)</small>
-                                </label>
-                            </li>
-
-
-                            <li>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">
-                                    <span> Accessories</span>
-                                    <small>(27)</small>
-                                </label>
-                            </li>
-
-
-                        </ul>
+                        <RadioButton/>
                     </div>
-
-                    <div>
-                        <div className="block-title">
-                            <h3>Brands</h3>
-                        </div>
-
-                        <ul className="block-content">
-                            <li>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">
-                                    <span>Nike</span>
-                                    <small>(10)</small>
-                                </label>
-                            </li>
-
-                            <li>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">
-                                    <span>Adidas</span>
-                                    <small>(7)</small>
-                                </label>
-                            </li>
-
-                            <li>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">
-                                    <span> Puma</span>
-                                    <small>(3)</small>
-                                </label>
-                            </li>
-
-                            <li>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">
-                                    <span>Vans</span>
-                                    <small>(3)</small>
-                                </label>
-                            </li>
-
-
-
-                            <li>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">
-                                    <span>Calvin Clain</span>
-                                    <small>(3)</small>
-                                </label>
-                            </li>
-
-                            <li>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">
-                                    <span>Moncler</span>
-                                    <small>(3)</small>
-                                </label>
-                            </li>
-
-                            <li>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">
-                                    <span>Givenchy</span>
-                                    <small>(3)</small>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
+                       
+                       <CheckBox/>
+                    
                 </div>
                 <div className="col-3-of-4">
                     <form action="">
