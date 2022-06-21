@@ -7,7 +7,7 @@ import Home from './components/layout/Home.jsx';
 import Register from './components/account/Register.jsx';
 import Login from './components/account/Login.jsx';
 import Cart from './components/cart/Cart.jsx'
-import './App.css';
+
 import ProductDetails from './components/catalog/ProductDetails.jsx';
 import CategoryPage from './components/catalog/CategoryPage.jsx';
 import NotFound from './components/errors/NotFound.jsx';

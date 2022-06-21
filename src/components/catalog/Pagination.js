@@ -1,5 +1,5 @@
 export class PaginatedResponse {
-    items;
+    items ;
     metaData;
 
     constructor(items, metaData) {

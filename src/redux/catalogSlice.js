@@ -33,7 +33,7 @@ export const fetchProductsAsync = createAsyncThunk(
         try {
             const response = await agent.Catalog.list(params);
             thunkAPI.dispatch(setMetaData(response.metaData));
-            return response;
+            return response.items;
         }
         catch (error) {
             return thunkAPI.rejectWithValue({ error: error.data })
@@ -72,7 +72,7 @@ function initParams() {
     return {
 
         pageNumber: 1,
-        pageSize: 6,
+        pageSize: 2,
         orderBy: 'name',
         brands: [],
         types: []

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PaginatedResponse } from "../catalog/Pagination";
+//import { PaginatedResponse } from "../catalog/Pagination";
 
 axios.defaults.baseURL = 'http://localhost:5000/api/';
 axios.defaults.withCredentials = true;
@@ -12,12 +12,14 @@ const responseBody = (response) => response.data;
 axios.interceptors.response.use(async response => {
     await sleep();
     
-    //    const pagination = response.headers['pagination'];
-    //  if(pagination){
-    //       response.data = new PaginatedResponse(response.data, JSON.parse(pagination));
-    //       return response;
+       const pagination = response.headers['pagination'];
+     if(pagination){
+        response.data = {items: response.data, metaData:JSON.parse(pagination)};
+            return response;
+          
         
-    //    }
+       }
+   
     return response;
 
 });

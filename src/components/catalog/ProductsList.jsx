@@ -1,6 +1,5 @@
 import CategoryProduct from "./CategoryProduct.jsx"
 import { Grid } from "@mui/material";
-import '../../styles/Products.css'
 import { useSelector } from "react-redux"
 import ProductCardSkeleton from "./productSkeleton.jsx"
 
