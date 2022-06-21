@@ -12,13 +12,14 @@ const responseBody = (response) => response.data;
 axios.interceptors.response.use(async response => {
     await sleep();
     
-    const pagination = response.headers['pagination'];
-    if(pagination){
-        response.data = new PaginatedResponse(response.data, JSON.parse(pagination));
+    //    const pagination = response.headers['pagination'];
+    //  if(pagination){
+    //       response.data = new PaginatedResponse(response.data, JSON.parse(pagination));
+    //       return response;
         
-    }
-
+    //    }
     return response;
+
 });
 
 const requests = {
@@ -32,9 +33,9 @@ const requests = {
 
 const Catalog = {
 
-    list: ()=> requests.get('products'),
+    list: (params)=> requests.get('products',params),
     details: (id) => requests.get(`products/${id}`),
-    fetchFilters: () => requests.get('products/filter')
+    fetchFilters: () => requests.get('products/filters')
 }
 
 const TestErrors = {

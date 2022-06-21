@@ -7,7 +7,7 @@ function getAxiosParams(productParams) {
     const params = new URLSearchParams();
 
     params.append('pageNumber', productParams.pageNumber.toString());
-    params.append('pageSize', productParams.paSize.toString());
+    params.append('pageSize', productParams.pageSize.toString());
     params.append('orderBy', productParams.orderBy);
 
     if (productParams.searchTerm) {
@@ -29,13 +29,11 @@ export const fetchProductsAsync = createAsyncThunk(
 
     'categories/fetchProductsAsync',
     async (_, thunkAPI) => {
-
-        const params = getAxiosParams(thunkAPI.getState().catalog.productParams);
+            const params = getAxiosParams(thunkAPI.getState().catalog.productParams)
         try {
             const response = await agent.Catalog.list(params);
-            thunkAPI.dispatch(setMetaData(response.metaData))
-
-            return response.items;
+            thunkAPI.dispatch(setMetaData(response.metaData));
+            return response;
         }
         catch (error) {
             return thunkAPI.rejectWithValue({ error: error.data })
@@ -44,7 +42,7 @@ export const fetchProductsAsync = createAsyncThunk(
 )
 export const fetchFilters = createAsyncThunk(
 
-    'catalog/fetchFilters',
+    'categories/fetchFilters',
     async (_, thunkAPI) => {
 
         try {
@@ -134,23 +132,7 @@ export const catalogSlice = createSlice({
             state.productStatus = 'idle';
         });
 
-        builder.addCase(fetchFilters.pending, (state) => {
-            state.status = 'pendingFetchFilters';
-        })
-
-        builder.addCase(fetchFilters.fulfilled, (state, action) => {
-
-            state.brands = action.payload.brands;
-            state.types = action.payload.types;
-            state.filtersLoaded = true;
-            state.status = 'idle';
-        })
-
-        builder.addCase(fetchFilters.rejected, (state, action) => {
-
-            state.status = 'idle';
-            console.log(action.payload);
-        })
+       
 
 
 
@@ -171,6 +153,24 @@ export const catalogSlice = createSlice({
             console.log(action);
             state.productStatus = 'idle';
 
+        })
+
+        builder.addCase(fetchFilters.pending, (state) => {
+            state.productStatus = 'pendingFetchFilters';
+        })
+
+        builder.addCase(fetchFilters.fulfilled, (state, action) => {
+
+            state.brands = action.payload.brands;
+            state.types = action.payload.types;
+            state.filtersLoaded = true;
+            state.productStatus = 'idle';
+        })
+
+        builder.addCase(fetchFilters.rejected, (state, action) => {
+
+            state.productStatus = 'idle';
+            console.log(action.payload);
         })
     })
 
