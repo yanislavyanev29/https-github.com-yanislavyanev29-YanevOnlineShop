@@ -1,4 +1,5 @@
 import axios from "axios";
+import {store} from "../../redux/configureStore.js"
 //import { PaginatedResponse } from "../catalog/Pagination";
 
 axios.defaults.baseURL = 'http://localhost:5000/api/';
@@ -8,6 +9,12 @@ const sleep = () => new Promise(resolve => setTimeout(resolve, 500));
 
 const responseBody = (response) => response.data;
 
+ axios.interceptors.request.use(config => {
+
+     const token = store.getState().account.user?.token;
+    if(token) config.headers.Authorization = `Bearer ${token}`;
+     return config;
+ })
 
 axios.interceptors.response.use(async response => {
     await sleep();
@@ -55,11 +62,19 @@ const Basket = {
     addItem: (productId , quantity = 1) => requests.post(`basket?productId=${productId}&quantity=${quantity}`, {}),
     removeItem: (productId,quantity = 1) => requests.delete(`basket?productId=${productId}&quantity=${quantity}`),
 }
+
+const Account = {
+
+    login: (values) => requests.post('account/login', values),
+    register: (values) => requests.post('account/register', values),
+    currentUser: () => requests.get('account/currentUser'),
+}
 const agent ={
 
     Catalog,
     TestErrors,
-    Basket
+    Basket,
+    Account
 }
 
 export default agent;
