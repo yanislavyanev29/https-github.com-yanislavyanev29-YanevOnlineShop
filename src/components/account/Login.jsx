@@ -38,19 +38,44 @@ const Login = () => {
     <form action="/post" onSubmit={handleSubmit(submitForm)}>
       <div className="input_box">
         <input type="text" placeholder="User name..." name="username" 
-        {...register('username', {required: 'Username is required'})}
+        {...register('username', 
+        {required: 'Username is required',
+        minLength: {
+          value: 3,
+          message: "Username must be atleast 3 characters long",
+        },
+        maxLength: {
+          value: 30,
+          message: "Username must be atmost 30 characters long"
+        },
+        pattern: {
+          value: /^[A-Za-z]+/,
+          message: "Username must contain alphabetical letters"
+        }
+      
+      })}
         error={!!errors.username}
         helperText={errors?.username?.message}
         />
+         {errors.username? <p style={{color: 'red'}} >{errors.username?.message}</p> : null}
         <div className="icon"><i className="fas fa-user"></i></div>
       </div>
       <div className="input_box">
         <input type="password" placeholder="Password" name="password"
-         {...register('password', {required: 'Password is required'})}
+         {...register('password', {
+           
+          required: 'Password is required',
+          pattern: {
+            value: /(?=^.{6,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$/,
+             message: 'Password is not complex enough'
+          }
+        })}
          error={!!errors.password}
          helperText={errors?.password?.message}
         required/>
+          {errors.password? <p style={{color: 'red'}} >{errors.password?.message}</p> : null}
         <div className="icon"><i className="fas fa-lock"></i></div>
+        
       </div>
       <div className="option_div">
         <div className="check_box">
@@ -62,10 +87,10 @@ const Login = () => {
         </div>
       </div>
       <div className="input_box button">
-        <input type="submit" value="Login"/>
+        <button type="submit" disabled={!isValid}>Login</button>
       </div>
       <div className="sign_up">
-        Not a member? <a href="#" disabled={!isValid} >Signup now</a>
+        Not a member? <a href="#" >Signup now</a>
       </div>
     </form>
   </div>
