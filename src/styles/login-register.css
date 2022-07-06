@@ -89,6 +89,8 @@ form .input_box{
   width: 100%;
   position: relative;
   margin-top: 15px;
+  margin-bottom: 24px;
+  
 }
 .input_box input{
   height: 100%;
@@ -99,6 +101,23 @@ form .input_box{
   padding-left: 45px;
   font-size: 17px;
   transition: all 0.3s ease;
+}
+
+.input_box button{
+  height: 100%;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  outline: none;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 19px;
+  transition: all 0.3s ease;
+}
+
+.input_box button:disabled{
+  background-color: lightgray;
 }
 .input_box input:focus{
   border-color: lightblue;
