@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
-import { useAppSelector } from "../../redux/configureStore.js";
 import { useState } from "react";
 import { mobile960,mobile795,mobile430 } from "../../responsive.js";
+import { useSelector,useDispatch } from "react-redux";
+import { useAppDispatch,useAppSelector } from "../../redux/configureStore.js";
+import { clearBasket } from "../../redux/basketSlice.js";
+import SignInMenu from "./SignInMenu.jsx";
 const Html = styled.div`font-family: 'Roboto', sans-serif;
 margin:0; padding-bottom:0px;
 box-sizing: border-box;
@@ -83,45 +86,13 @@ const SearchIcon = styled.div`
     }
 `
 
-const InputStyle = {
-    height: '100%',
-    width: '100%',
-    fontSize: '1.6rem',
-    borderRadius: '50px',
-    border: '0',
-    outline: '0',
-    color: '#13131a',
-    padding: '1rem',
-    textTransform: 'none'
-}
 
-const LabelStyle = {
-    cursor: 'pointer',
-    fontSize: '2.2rem',
-    marginRight: '1.5rem',
-    color:'#13131a',
-    "&:hover": {
-    color:"#d3ad7f"
- 
-    }
-}
+
+
 const IconContainer = styled.div`
 `
 
-const SearchForm = styled.div`
-    position: absolute;
-    top:115%; right: 7%;
-    background: #fff;
-    width: 35rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    border-radius: 50px;
-    border: 2px solid black;
-    align-items: center;
-    transform: scaleY(0);
-    transform-origin: top;
-`
+
 const Bar = styled.div`
   display: none;
   color:#fff;
@@ -138,21 +109,21 @@ const decorationNone ={
   textDecoration : "none"
 }
 const Navbar = () => {
-    const [isActive, setActive] = useState(false);
-    const [isActiveSearch, setActiveSearch] = useState(false);
+   
+  const [isActive, setActive] = useState(false);
+  
 
-    const {basket} = useAppSelector(state => state.basket);
-    const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity,0)
+    const {basket} = useSelector(state => state.basket);
+   const {user} = useSelector(state => state.account);
      
+    const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity,0)
     const toggleActive = () => {
       setActive(!isActive);
   
      
     };
   
-    const toggleSearch = () => {
-      setActiveSearch(!isActiveSearch);
-    };
+   
 
     return (
 
@@ -167,23 +138,27 @@ const Navbar = () => {
              <Link style={decorationNone} to="/"> <Anchor>Mens</Anchor></Link>
              <Link style={decorationNone} to="/"> <Anchor>Womens</Anchor></Link>
              <Link style={decorationNone} to="/">  <Anchor>Kids</Anchor></Link>
-             <Link style={decorationNone} to="/register"><Anchor>Register</Anchor></Link>
-             <Link style={decorationNone} to="/login"> <Anchor>Login</Anchor></Link>
+                {user? <SignInMenu/>
+               :
+                <Link style={decorationNone} to="/register"><Anchor>Register</Anchor></Link>}
+              
+              {user? null
+               :
+                <Link style={decorationNone} to="/login"><Anchor>Login</Anchor></Link>}
+              
+            
 
 
              </Nav>
 
              <IconContainer>
 
-                   <SearchIcon className="fas fa-search" onClick={toggleSearch} id="search-btn"></SearchIcon>
+                   {user? <Span>Hello {user.email}</Span> : null} 
                  <Link to="/cart" > <SearchIcon className="fas fa-shopping-cart" id="cart-btn"><span style={ {fontSize: "22px"}}>{itemCount? itemCount : 0} </span></SearchIcon></Link>
                    <Bar className="fas fa-bars" id="menu-btn" onClick={toggleActive}></Bar>
              </IconContainer>
 
-              <SearchForm style= {isActiveSearch ? {transform: 'scaleY(1)'} : {}}>
-              <input style={InputStyle} type="search" id="search-box" placeholder="search here..." />
-              <label  style={LabelStyle} htmlFor="search-box" className="fas fa-search"></label>
-              </SearchForm>
+            
 
          </Header>
         </Html>
