@@ -4,6 +4,7 @@ import Announcement from "../HomePage/Announcement.jsx";
 import {mobile960, mobile795} from "../../responsive.js";
 import { useDispatch,useSelector } from "react-redux";
 import { addBasketItemAsync,removeBasketItemAsync } from "../../redux/basketSlice.js";
+import { useNavigate } from "react-router-dom";
 
 
 const Container = styled.div``;
@@ -169,6 +170,12 @@ const dispatch = useDispatch();
 
    const total = productsTotalPrice + deliveryFree;
 
+   let navigate = useNavigate(); 
+   const handleClick = () =>{ 
+     let path = '/checkout'; 
+     navigate(path);
+   }
+
        if(!basket) return <Title>The Basket is empty</Title>
     return (
 
@@ -185,7 +192,7 @@ const dispatch = useDispatch();
 
                   </TopTexts>
 
-                  <TopButton type ="filled">CHECKOUT NOW</TopButton>
+                  <TopButton type ="filled" onClick={handleClick}>CHECKOUT NOW</TopButton>
               </Top>
                <Bottom>
 

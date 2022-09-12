@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {basketSlice} from './basketSlice.js'
 import {catalogSlice} from './catalogSlice.js'
-import {useDispatch, useSelector } from "react-redux";
 import { accountSlice } from "./accountSlice.js";
+import {useDispatch, useSelector } from "react-redux";
+
 
 export const store = configureStore ({
 

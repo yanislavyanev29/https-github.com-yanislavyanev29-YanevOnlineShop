@@ -1,4 +1,4 @@
-import {Redirect,Route,RouteComponentProps,RouteProps} from "react-router";
+import {Redirect,Route} from "react-router";
 import { useSelector } from "react-redux";
 
 
