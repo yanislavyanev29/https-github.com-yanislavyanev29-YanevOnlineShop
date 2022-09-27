@@ -19,7 +19,7 @@ import LoadingComponent from './components/layout/LoadingComponent.jsx';
 import {fetchBasketAsync} from './redux/basketSlice.js'
 import { fetchCurrentUser } from './redux/accountSlice.js';
 import AddressForm from './components/checkout/AddressForm.jsx';
-import CheckoutPage from './components/checkout/CheckoutPage.jsx';
+import CheckoutWrapper from './components/checkout/CheckoutWrapper.jsx';
 import Orders from './components/orders/Orders.jsx';
 
 
@@ -60,7 +60,7 @@ function App() {
                             <Route path="/details/:id" element={<ProductDetails />} />
                             <Route path="/cart" element={<Cart/>} />
                             <Route path="/categories" element={<CategoryPage />} />
-                            <Route path="/checkout" element={<CheckoutPage />} />
+                            <Route path="/checkout" element={<CheckoutWrapper />} />
                             <Route path="/orders" element={<Orders />} />
                             <Route path="*" element={<NotFound/>} />
                          </Routes>
