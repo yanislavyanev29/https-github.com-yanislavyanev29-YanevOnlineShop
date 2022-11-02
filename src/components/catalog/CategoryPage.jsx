@@ -1,13 +1,13 @@
 import { Grid, Paper } from "@mui/material";
-import { useEffect } from 'react';
-import { useDispatch,useSelector } from 'react-redux';
-import { fetchFilters,fetchProductsAsync,productSelectors,setPageNumber,setProductParams } from '../../redux/catalogSlice.js';
+import { setPageNumber,setProductParams } from '../../redux/catalogSlice.js';
 import LoadingComponent from '../layout/LoadingComponent.jsx';
 import RadioButton from './RadioButton.jsx';
 import AppPagination from './PaginationComponent.jsx';
 import CheckBox from './CheckBox.jsx';
 import ProductsList from './ProductsList.jsx';
 import ProductSearch from "./ProductSearch.jsx";
+import useProducts from "../hooks/useProducts.js";
+import { useDispatch, useSelector } from "react-redux";
 
 const sortOptions = [
 
@@ -18,20 +18,12 @@ const sortOptions = [
 
 const CategoryPage = () => {
 
-    const products = useSelector(productSelectors.selectAll)
-    const {productsLoaded,filtersLoaded,brands,types,productParams,metaData} = useSelector(state => state.catalog);
-    const dispatch = useDispatch();
-  
-    useEffect(() => {
-        if(!productsLoaded) dispatch(fetchProductsAsync());
-       
-    }, [dispatch, productsLoaded]);
+   const {products, brands, types, filtersLoaded,metaData} = useProducts();
+   const {productParams} = useSelector(state => state.catalog);
+   const dispatch = useDispatch();
+    if (!filtersLoaded) return <LoadingComponent message='Loading products...' />
 
-   
-    useEffect(() => {
-        if (!filtersLoaded) dispatch(fetchFilters());
-    }, [filtersLoaded, dispatch]);
-   // if (!filtersLoaded) return <LoadingComponent message='Loading products...' />
+
     return (
 
         <Grid sx={{marginTop: '180px'}} container columnSpacing={4}>
