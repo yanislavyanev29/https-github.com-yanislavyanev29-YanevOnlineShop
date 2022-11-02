@@ -2,7 +2,7 @@ import axios from "axios";
 import {store} from "../../redux/configureStore.js"
 //import { PaginatedResponse } from "../catalog/Pagination";
 
-axios.defaults.baseURL = 'http://localhost:5000/api/';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.withCredentials = true;
 
 const sleep = () => new Promise(resolve => setTimeout(resolve, 500));
@@ -17,7 +17,7 @@ const responseBody = (response) => response.data;
  })
 
 axios.interceptors.response.use(async response => {
-    await sleep();
+  if(process.env.NODE_ENV === 'development')  await sleep();
     
        const pagination = response.headers['pagination'];
      if(pagination){
@@ -37,7 +37,30 @@ const requests = {
     post: (url, body) => axios.post(url,body).then(responseBody),
     put: (url,body) => axios.put(url,body).then(responseBody),
     delete: (url) => axios.delete(url).then(responseBody),
+    postForm: (url, data) => axios.post(url,data, {
+        headers: {'Content-type' : 'multipart/form-data'}
+    }).then(responseBody),
+    putForm: (url, data) => axios.put(url,data, {
+        headers: {'Content-type' : 'multipart/form-data'}
+    }).then(responseBody)
 
+}
+
+function createFormData(item) {
+
+    let formData = new FormData();
+    for(const key in item){
+        formData.append(key, item[key])
+    }
+
+    return formData;
+}
+
+const Admin = {
+
+    createProduct: (product) => requests.postForm('products', createFormData(product)),
+    updateProduct: (product) => requests.putForm('products',createFormData(product)),
+    deleteProduct: (id) => requests.delete(`products/${id}`)
 }
 
 const Catalog = {
@@ -88,7 +111,8 @@ const agent ={
     Basket,
     Account,
     Orders,
-    Payments
+    Payments,
+    Admin
 }
 
 export default agent;

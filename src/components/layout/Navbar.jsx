@@ -135,9 +135,8 @@ const Navbar = () => {
              <Nav style={isActive ? {right: '0' } : {}}>
              <Link style={decorationNone} to="/"><Anchor >Home</Anchor></Link>
              <Link style={decorationNone} to="/categories"><Anchor>Categories</Anchor></Link>
-             <Link style={decorationNone} to="/"> <Anchor>Mens</Anchor></Link>
-             <Link style={decorationNone} to="/"> <Anchor>Womens</Anchor></Link>
-             <Link style={decorationNone} to="/">  <Anchor>Kids</Anchor></Link>
+             {user && user.roles?.includes('Admin') &&
+                     <Link style={decorationNone} to="/inventory"><Anchor>Inventory</Anchor></Link>}
                 {user? <SignInMenu/>
                :
                 <Link style={decorationNone} to="/register"><Anchor>Register</Anchor></Link>}
